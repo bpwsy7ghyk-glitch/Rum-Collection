@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17130f">
+<meta name="description" content="Archivio personale della collezione Rum Collection 2026.">
+<title>Rum Collection 2026</title>
+<style>
+:root{color-scheme:dark;--bg:#12100e;--panel:#211b15;--gold:#c9a66b;--ink:#f3eee5;--muted:#b9ad9b;--line:#40362b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#453522 0,#17130f 44%,#100e0c 100%);color:var(--ink);font:15px/1.5 system-ui,-apple-system,sans-serif}
+header{text-align:center;padding:35px 16px 24px;border-bottom:1px solid var(--line)}.eyebrow{color:var(--gold);letter-spacing:.2em;text-transform:uppercase;font-size:11px}.brand{font:clamp(34px,7vw,58px) Georgia,serif;margin:10px 0}.subtitle{color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+main{max-width:1120px;margin:auto;padding:22px 16px 55px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat,.card,.toolbar input,.toolbar select{background:var(--panel);border:1px solid var(--line);border-radius:12px}.stat{text-align:center;padding:13px}.stat b{display:block;color:var(--gold);font:26px Georgia}.stat span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.toolbar input,.toolbar select{color:var(--ink);padding:12px;font:inherit}.toolbar input{flex:1;min-width:190px}.toolbar select{min-width:170px}
+.heading{display:flex;justify-content:space-between;align-items:end;margin:25px 0 13px}.heading h2{font:25px Georgia;margin:0}.heading small,.meta{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:13px}.card{overflow:hidden;cursor:pointer}.card:hover{border-color:var(--gold)}.visual{height:145px;display:grid;place-items:center;background:radial-gradient(ellipse at center bottom,#6a4a25,#211a13 70%);border-bottom:1px solid var(--line)}.bottle{width:46px;height:105px;border:2px solid #b58d52;border-radius:8px;background:linear-gradient(90deg,#4b2c16,#9a642c 45%,#4b2c16);position:relative;box-shadow:0 8px 22px #0009}.bottle:before{content:"";position:absolute;width:18px;height:22px;left:12px;top:-22px;border:2px solid #b58d52;border-bottom:0;background:#3b2718;border-radius:4px 4px 0 0}.bottle:after{content:"RC";position:absolute;top:42px;left:5px;right:5px;text-align:center;background:#d9bd86;color:#2b2117;padding:5px;font:13px Georgia}
+.body{padding:13px}.tag{font-size:10px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}.body h3{font:18px/1.25 Georgia;margin:7px 0}.meta{font-size:12px}.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.chip{border:1px solid var(--line);border-radius:20px;padding:3px 8px;font-size:10px;color:#d8c7aa}.empty{padding:30px;color:var(--muted);text-align:center}
+footer{text-align:center;color:var(--muted);font-size:11px;border-top:1px solid var(--line);margin-top:30px;padding-top:16px}
+.modal{display:none;position:fixed;inset:0;background:#000b;align-items:center;justify-content:center;padding:16px}.modal.open{display:flex}.dialog{max-width:560px;width:100%;max-height:90vh;overflow:auto;background:#211b15;border:1px solid #80633c;border-radius:15px;padding:20px}.dialogtop{display:flex;justify-content:space-between;gap:12px}.dialog h2{font:26px Georgia}.close{background:none;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:4px 12px;font-size:20px}.details{display:grid;grid-template-columns:1fr 1fr;gap:10px}.detail{border-bottom:1px solid var(--line);padding:8px 0}.detail span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase}.note{color:var(--muted);font-size:12px}
+@media(max-width:520px){main{padding:16px 12px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.visual{height:120px}.body{padding:10px}.body h3{font-size:15px}.details{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">Archivio privato · Edizione 2026</div><div class="brand">RUM COLLECTION</div><div class="subtitle">Rare bottles · Origins · Stories</div></header>
+<main>
+<section class="stats"><div class="stat"><b id="count">25</b><span>Bottiglie in archivio</span></div><div class="stat"><b id="closed">23</b><span>Chiuse</span></div><div class="stat"><b id="origins">15</b><span>Paesi / origini</span></div></section>
+<div class="toolbar"><input id="search" type="search" placeholder="Cerca rum, distilleria, annata…"><select id="country"><option value="">Tutte le origini</option></select><select id="status"><option value="">Tutti gli stati</option><option>Closed</option><option>Opened</option><option>Empty</option></select></div>
+<div class="heading"><h2>La collezione</h2><small id="shown">25 bottiglie</small></div><div class="grid" id="grid"></div>
+<footer>RUM COLLECTION · Archivio personale · Dati importati dal catalogo RumX</footer>
+</main>
+<div class="modal" id="modal"><div class="dialog"><div class="dialogtop"><div><div class="tag" id="modalTag">Scheda bottiglia</div><h2 id="modalTitle"></h2></div><button class="close" id="close">×</button></div><div class="details" id="details"></div><p class="note">Le fotografie originali non sono incluse nel catalogo CSV; è mostrata un'illustrazione provvisoria.</p></div></div>
+<script>
+const bottles = [
+{id:"RX14309",distillery:"Destileria Sofa",bottler:"Maison Ferrand",name:"Plantation Venezuela One-Time",country:"Venezuela",abv:"52%",vintage:"2010",age:"12yr",status:"Closed",volume:"70 cl"},
+{id:"RX17278",distillery:"",bottler:"Maison Ferrand",name:"Planteray Sealander",country:"Multi-origin",abv:"40%",status:"Opened",price:"40,00 EUR",volume:"70 cl"},
+{id:"RX19",distillery:"Multi Distilleries",bottler:"Maison Ferrand",name:"Plantation Gran Añejo (Guatemala & Belize)",country:"Multi-origin",abv:"42%",age:"3yr - 6yr",status:"Empty",volume:"70 cl"},
+{id:"RX20229",distillery:"Travellers",bottler:"Maison Ferrand",name:"Planteray Belize One-Time",country:"Belize",abv:"48,3%",vintage:"2008",age:"15yr",status:"Closed",volume:"70 cl"},
+{id:"RX26477",distillery:"Fiji Rum & Co",bottler:"Maison Ferrand",name:"Planteray Extreme Series VI (Legends of Rum N°4)",country:"Fiji",abv:"57,8%",vintage:"2007",age:"18yr",status:"Closed",volume:"70 cl"},
+{id:"RX9683",distillery:"T.D.L",bottler:"Maison Ferrand",name:"Plantation Trinidad One-Time",country:"Trinidad & Tobago",abv:"51,8%",vintage:"2009",age:"12yr",status:"Closed",volume:"70 cl"},
+{id:"RX17012",distillery:"Don José",bottler:"Maison Ferrand",name:"Plantation Panama One-Time Terravera",country:"Panama",abv:"51,4%",vintage:"2010",age:"13yr",status:"Closed",volume:"70 cl"},
+{id:"RX22711",distillery:"Medine Estate",bottler:"Maison Ferrand",name:"Planteray Mauritius (One-Time Limited Edition)",country:"Mauritius",abv:"46,5%",vintage:"2013",age:"11yr",status:"Closed",volume:"70 cl"},
+{id:"RX12369",distillery:"South Pacific",bottler:"Maison Ferrand",name:"Plantation One-Time Limited Edition",country:"Fiji",abv:"49,5%",vintage:"2009",age:"13yr",status:"Closed"},
+{id:"RX13823",distillery:"West Indies",bottler:"Maison Ferrand",name:"Plantation Barbados One-Time Limited 20",country:"Barbados",abv:"50,2%",vintage:"2013",age:"9yr",status:"Closed",volume:"70 cl"},
+{id:"RX6632",distillery:"Long Pond",bottler:"Maison Ferrand",name:"Plantation Jamaica Finish Rye Whiskey ITP - HJC",country:"Jamaica",abv:"49,1%",vintage:"1996",age:"23yr",status:"Closed",volume:"70 cl"},
+{id:"RX23888",distillery:"T.D.L",bottler:"Maison Ferrand",name:"Planteray Trinidad (One-Time Limited Edition)",country:"Trinidad & Tobago",abv:"47,8%",vintage:"2003",age:"22yr",status:"Closed",volume:"70 cl"},
+{id:"RX16150",distillery:"South Pacific",bottler:"Maison Ferrand",name:"Plantation Fiji One-Time",country:"Fiji",abv:"50,3%",vintage:"2004",age:"19yr",status:"Closed",volume:"70 cl"},
+{id:"RX11754",distillery:"Clarendon",bottler:"Maison Ferrand",name:"Plantation Jamaica 2007 Clarendon MSP (One-Time Limited Edition) MSP",country:"Jamaica",abv:"48,4%",vintage:"2007",age:"15yr",status:"Closed",volume:"70 cl"},
+{id:"RX7335",distillery:"Caroni",bottler:"Velier",name:"4th Employees Basdeo „Dicky“ Ramsarran HTR",country:"Trinidad & Tobago",abv:"64,3%",vintage:"2000",age:"20yr",status:"Closed",volume:"70 cl"},
+{id:"RX948",distillery:"Demerara Distillers Ltd",bottler:"Maison Ferrand",name:"Plantation Guyana 2008 (Red Pineau Charentes Cask)",country:"Guyana",abv:"47,6%",vintage:"2008",age:"12yr",status:"Closed",volume:"70 cl"},
+{id:"RX17312",distillery:"West Indies",bottler:"Maison Ferrand",name:"Plantation Barbados One-Time Edition",country:"Barbados",abv:"48,7%",vintage:"2007",age:"16yr",status:"Closed",volume:"70 cl"},
+{id:"RX12985",distillery:"Demerara Distillers Ltd",bottler:"Maison Ferrand",name:"Plantation One-Time Limited Edition",country:"Guyana",abv:"51%",vintage:"2007",age:"2yr - 13yr",status:"Closed",volume:"70 cl"},
+{id:"RX1847",distillery:"South Pacific",bottler:"Maison Ferrand",name:"Plantation Fiji One-Time",country:"Fiji",abv:"50,2%",vintage:"2005",age:"15yr",status:"Closed",volume:"70 cl"},
+{id:"RX1893",distillery:"Clarendon",bottler:"Maison Ferrand",name:"Plantation Jamaica One-Time MMW",country:"Jamaica",abv:"49,5%",vintage:"2003",age:"17yr",status:"Closed",volume:"70 cl"},
+{id:"RX10847",distillery:"Alcoholes Del Istmo",bottler:"Maison Ferrand",name:"Plantation One-Time Limited Edition",country:"Panama",abv:"45,7%",vintage:"2008",age:"13yr",status:"Closed",volume:"70 cl"},
+{id:"RX8925",distillery:"Cartavio",bottler:"Maison Ferrand",name:"Plantation Peru 2006 (One-Time Limited Edition",country:"Peru",abv:"47,9%",vintage:"2006",age:"14yr",status:"Closed",volume:"75 cl"},
+{id:"RX7714",distillery:"West Indies",bottler:"Maison Ferrand",name:"Plantation One-Time Limited Edition",country:"Barbados",abv:"51,1%",vintage:"2011",age:"9yr",status:"Closed",volume:"70 cl"},
+{id:"RX10169",distillery:"Beenleigh",bottler:"Maison Ferrand",name:"Plantation Australia (One-Time Limited Edition)",country:"Australia",abv:"49,3%",vintage:"2007",age:"14yr",status:"Closed",volume:"70 cl"},
+{id:"RX16582",distillery:"T.D.L",bottler:"Distilia",name:"The Golden Age of Piracy Bartholomew Roberts Black Bart",country:"Trinidad & Tobago",abv:"62,7%",vintage:"1991",age:"31yr",status:"Closed",volume:"70 cl"}
+];
+const $=id=>document.getElementById(id), esc=s=>String(s||"—").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function render(){
+ const q=$("search").value.toLowerCase(),c=$("country").value,s=$("status").value;
+ const rows=bottles.filter(x=>(!q||[x.name,x.distillery,x.bottler,x.vintage,x.country,x.id].join(" ").toLowerCase().includes(q))&&(!c||x.country===c)&&(!s||x.status===s));
+ $("shown").textContent=rows.length+" di "+bottles.length+" bottiglie";
+ $("grid").innerHTML=rows.length?rows.map(x=>`<article class="card" data-id="${x.id}"><div class="visual"><div class="bottle"></div></div><div class="body"><div class="tag">${esc(x.country)} · ${esc(x.vintage||"Annata n.d.")}</div><h3>${esc(x.name)}</h3><div class="meta">${esc(x.distillery||"Distilleria non indicata")} · ${esc(x.abv)}</div><div class="chips"><span class="chip">${esc(x.age||"Età n.d.")}</span><span class="chip">${esc(x.status)}</span></div></div></article>`).join(""):'<div class="empty">Nessuna bottiglia trovata.</div>';
+ document.querySelectorAll(".card").forEach(el=>el.addEventListener("click",()=>openBottle(el.dataset.id)));
+}
+function openBottle(id){
+ const x=bottles.find(b=>b.id===id);$("modalTag").textContent=x.bottler+" · "+x.id;$("modalTitle").textContent=x.name;
+ $("details").innerHTML=[["Origine",x.country],["Distilleria",x.distillery],["Imbottigliatore",x.bottler],["Annata",x.vintage],["Gradazione",x.abv],["Età dichiarata",x.age],["Stato bottiglia",x.status],["Volume",x.volume],["RumX ID",x.id],["Prezzo registrato",x.price]].map(([k,v])=>`<div class="detail"><span>${k}</span><b>${esc(v)}</b></div>`).join("");
+ $("modal").classList.add("open");
+}
+[...new Set(bottles.map(x=>x.country))].sort().forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;$("country").append(o)});
+$("count").textContent=bottles.length;$("closed").textContent=bottles.filter(x=>x.status==="Closed").length;$("origins").textContent=new Set(bottles.map(x=>x.country)).size;
+$("search").addEventListener("input",render);$("country").addEventListener("change",render);$("status").addEventListener("change",render);$("close").addEventListener("click",()=>$("modal").classList.remove("open"));$("modal").addEventListener("click",e=>{if(e.target===$("modal"))$("modal").classList.remove("open")});document.addEventListener("keydown",e=>{if(e.key==="Escape")$("modal").classList.remove("open")});render();
+</script>
+</body>
+</html>
