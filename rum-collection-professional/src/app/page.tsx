@@ -1,3 +1,5 @@
+import SiteHeader from "../components/site-header";
+import SiteFooter from "../components/site-footer";
 const pillars = [
   { title: "Discover", text: "Explore a structured catalogue of rum bottles, distilleries, origins, vintages and independent bottlers." },
   { title: "Collect", text: "Build a private collection, record bottle details, purchase history, condition and personal photographs." },
@@ -7,15 +9,7 @@ const pillars = [
 export default function HomePage() {
   return (
     <main className="shell">
-      <header className="topbar">
-        <a className="brand" href="/">RUM COLLECTION</a>
-        <nav className="nav" aria-label="Main navigation">
-          <a href="#catalogue">Catalogue</a>
-          <a href="#community">Community</a>
-          <a href="#about">About</a>
-          <a href="/login">Sign in</a>
-        </nav>
-      </header>
+      <SiteHeader/>
 
       <section className="hero">
         <div className="kicker">The international rum collector's archive</div>
@@ -53,7 +47,7 @@ export default function HomePage() {
       </section>
 
       <footer className="footer" id="about">
-        RUM COLLECTION · Independent collector platform · Foundational build
+        <SiteFooter/>
       </footer>
     </main>
   );

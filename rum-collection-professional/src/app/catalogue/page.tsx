@@ -1,5 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import CatalogueBrowser, { type Bottle } from "./catalogue-browser";
+import SiteHeader from "../../components/site-header";
+import SiteFooter from "../../components/site-footer";
 
 export const metadata = {
   title: "Rum Catalogue | Rum Collection",
@@ -24,13 +26,7 @@ export default async function CataloguePage() {
 
   return (
     <main className="shell catalogue-shell">
-      <header className="topbar">
-        <a className="brand" href="/">RUM COLLECTION</a>
-        <nav className="nav" aria-label="Main navigation">
-          <a href="/catalogue" aria-current="page">Catalogue</a>
-          <a href="/login">Sign in</a>
-        </nav>
-      </header>
+      <SiteHeader active="catalogue"/>
       <section className="catalogue-intro">
         <div className="kicker">The international rum collector&apos;s archive</div>
         <h1>Explore the catalogue.</h1>
@@ -44,7 +40,7 @@ export default async function CataloguePage() {
       ) : (
         <CatalogueBrowser bottles={bottles} />
       )}
-      <footer className="footer">RUM COLLECTION · Catalogue records are progressively verified and enriched.</footer>
+      <SiteFooter/>
     </main>
   );
 }
