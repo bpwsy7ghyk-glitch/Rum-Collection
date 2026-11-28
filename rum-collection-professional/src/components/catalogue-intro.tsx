@@ -1,0 +1,3 @@
+"use client";
+import {useLocale} from "./language-provider";
+export default function CatalogueIntro(){const {locale}=useLocale();const it=locale==="it";return <section className="catalogue-intro"><div className="kicker">{it?"L'archivio internazionale dei collezionisti di rum":"The international rum collector's archive"}</div><h1>{it?"Esplora il catalogo.":"Explore the catalogue."}</h1><p className="lead">{it?"Un archivio organizzato di edizioni, distillerie, provenienze e imbottigliatori. Cerca i record e apri ogni bottiglia per consultarne la scheda tecnica.":"A structured archive of releases, distilleries, origins and bottlers. Search the records and open each bottle for its technical profile."}</p></section>}
