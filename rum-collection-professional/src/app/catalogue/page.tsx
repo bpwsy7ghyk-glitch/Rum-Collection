@@ -13,7 +13,7 @@ export default async function CataloguePage() {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("bottles")
-      .select("id,slug,official_name,producer,distillery,bottler,country,vintage_year,age_statement,abv,volume_ml,series_name,edition_name,description,data_confidence")
+      .select("id,slug,official_name,producer,distillery,bottler,country,vintage_year,age_statement,abv,volume_ml,series_name,edition_name,description,data_confidence,technical_profile,sensory_profile,collector_profile,source_references,profile_version")
       .eq("status", "published")
       .order("official_name", { ascending: true });
     if (error) throw error;
