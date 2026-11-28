@@ -1,0 +1,4 @@
+"use client";
+import Link from "next/link";
+import {useLocale} from "./language-provider";
+export default function SiteHeader({active}:{active?:"catalogue"}){const {locale}=useLocale();const it=locale==="it";return <header className="topbar"><Link className="brand" href="/">RUM COLLECTION</Link><nav className="nav" aria-label={it?"Navigazione principale":"Main navigation"}><Link href="/catalogue" aria-current={active==="catalogue"?"page":undefined}>{it?"Catalogo":"Catalogue"}</Link><a href="/#community">{it?"Comunità":"Community"}</a><a href="/#about">{it?"Informazioni":"About"}</a><Link href="/login">{it?"Accedi":"Sign in"}</Link></nav></header>}
