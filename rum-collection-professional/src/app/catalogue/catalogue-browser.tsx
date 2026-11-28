@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {useLocale} from "../../../components/language-provider";
+import {useLocale} from "../../components/language-provider";
 
 type JsonObject = Record<string, unknown>;
 type SourceReference = {
