@@ -98,3 +98,17 @@ h1 { font: clamp(42px, 7vw, 76px)/1.02 Georgia, serif; margin:18px 0; font-weigh
 .collection-list-heading span { color:var(--muted); font-size:12px; }
 .owned-card { cursor:default; }
 @media(max-width:760px) { .collection-add-form { grid-template-columns:1fr 1fr; } .collection-add-form label:first-child { grid-column:1/-1; } .collection-add-form button { grid-column:1/-1; } }
+
+
+.profile-section { margin:28px 0; padding-top:20px; border-top:1px solid var(--line); }
+.profile-section h3 { margin:0 0 14px; color:var(--gold-light); font:22px/1.2 Georgia,serif; }
+.profile-nested { display:grid; grid-template-columns:1fr 1fr; gap:0 18px; margin:0; }
+.profile-nested > div { min-width:0; padding:12px 0; border-bottom:1px solid var(--line); }
+.profile-nested dt { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+.profile-nested dd { margin:6px 0 0; color:var(--text); font-size:14px; line-height:1.55; overflow-wrap:anywhere; }
+.profile-list { margin:0; padding-left:20px; color:var(--text); line-height:1.8; }
+.profile-sources { display:grid; gap:14px; margin:0; padding:0; list-style:none; }
+.profile-sources li { display:grid; gap:4px; padding:12px 0; border-bottom:1px solid var(--line); }
+.profile-sources a { color:var(--gold-light); text-decoration:underline; text-underline-offset:3px; }
+.profile-sources span, .profile-sources small { color:var(--muted); line-height:1.5; }
+@media(max-width:600px) { .profile-nested { grid-template-columns:1fr; } }
